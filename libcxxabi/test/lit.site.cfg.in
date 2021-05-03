@@ -3,10 +3,13 @@
 @SERIALIZED_LIT_PARAMS@
 
 import os
+import platform
 import site
 
 config.cxx_under_test           = "@CMAKE_CXX_COMPILER@"
 config.project_obj_root         = "@CMAKE_BINARY_DIR@"
+config.install_root             = "@CMAKE_BINARY_DIR@"
+config.libcxx_install_include   ="@LIBCXX_INSTALL_INCLUDE_DIR@"
 config.libcxxabi_hdr_root       = "@LIBCXXABI_HEADER_DIR@"
 config.libcxxabi_src_root       = "@LIBCXXABI_SOURCE_DIR@"
 config.libcxxabi_obj_root       = "@LIBCXXABI_BINARY_DIR@"
@@ -50,6 +53,18 @@ config.recursiveExpansionLimit = 10
 
 # Infer the test_exec_root from the build directory.
 config.test_exec_root = os.path.join(config.libcxxabi_obj_root, 'test')
+
+if platform.system() == 'AIX':
+    config.substitutions.append(('%{link_flags}',
+        '-nostdlib++ -L {0} -lc++ -lc++abi -Wl,-bbigtoc'.format(
+            config.abi_library_root)
+    ))
+    config.substitutions.append(('%{compile_flags}',
+    '-nostdinc++ -DLIBCXXABI_NO_TIMER -D__LIBC_NO_CPP_MATH_OVERLOADS__ -isystem {} -I {} -I {}'.format(
+        os.path.join(config.install_root,config.libcxx_install_include),
+        os.path.join(config.libcxx_src_root, 'test', 'support'),
+        os.path.join(config.libcxx_src_root, 'src'))
+    ))
 
 import libcxx.test.format
 config.test_format = libcxx.test.format.CxxStandardLibraryTest()

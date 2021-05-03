@@ -113,6 +113,13 @@ function generate-cmake-libcxx-win() {
           "${@}"
 }
 
+function generate-cmake-aix() {
+    generate-cmake-base \
+          -S "${MONOREPO_ROOT}/llvm" \
+          -DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
+          "${@}"
+}
+
 function check-cxx-cxxabi() {
     echo "--- Installing libc++ and libc++abi to a fake location"
     ${NINJA} -vC "${BUILD_DIR}" install-cxx install-cxxabi
@@ -576,6 +583,14 @@ windows-static)
     generate-cmake-libcxx-win -DLIBCXX_ENABLE_SHARED=OFF
     echo "+++ Running the libc++ tests"
     ${NINJA} -vC "${BUILD_DIR}" check-cxx
+;;
+aix)
+    export CC=ibm-clang
+    export CXX=ibm-clang++_r
+    clean
+    generate-cmake-aix -C "${MONOREPO_ROOT}/libcxx/cmake/caches/AIX.cmake" \
+                   -DLIBCXX_TEST_CONFIG="${MONOREPO_ROOT}/libcxx/test/configs/llvm-libc++-shared.cfg.in"
+    check-cxx-cxxabi
 ;;
 #################################################################
 # Insert vendor-specific internal configurations below.
