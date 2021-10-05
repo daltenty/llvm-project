@@ -25,6 +25,10 @@
 #include "typeinfo"
 #include "vector"
 
+#ifdef _AIX
+#include <sys/localedef.h>
+#endif
+
 #if defined(_LIBCPP_MSVCRT)
 #   define _CTYPE_DISABLE_MACROS
 #endif
