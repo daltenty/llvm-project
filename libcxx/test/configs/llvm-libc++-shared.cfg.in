@@ -56,7 +56,7 @@ config.substitutions.append(('%{compile_flags}',
 ))
 if platform.system() == 'AIX':
     config.substitutions.append(('%{link_flags}',
-        '-nostdlib++ -L {0} -lc++ -lc++abi -lunwind -latomic -pthread'.format(
+        '-nostdlib++ -L {0} -lc++ -lc++abi -latomic -pthread'.format(
             os.path.join(INSTALL_ROOT, LIBRARY_DIR))
     ))
 else:
