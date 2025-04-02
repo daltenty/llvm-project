@@ -187,6 +187,7 @@ COMPATIBLE_LANGOPT(RecoveryASTType, 1, 1, "Preserve the type in recovery express
 
 BENIGN_LANGOPT(ThreadsafeStatics , 1, 1, "thread-safe static initializers")
 LANGOPT(POSIXThreads      , 1, 0, "POSIX thread support")
+LANGOPT(ThreadSafeMacros      , 1, 0, "Thread-safe predefined macros")
 LANGOPT(Blocks            , 1, 0, "blocks extension to C")
 BENIGN_LANGOPT(EmitAllDecls      , 1, 0, "emitting all declarations")
 LANGOPT(MathErrno         , 1, 1, "errno in math functions")

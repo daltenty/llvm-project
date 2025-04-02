@@ -38,7 +38,7 @@ public:
 
   void setThreadSafeDefines(const LangOptions &Opts,
                             MacroBuilder &Builder) const {
-    if (Opts.POSIXThreads) {
+    if (Opts.POSIXThreads || Opts.ThreadSafeMacros) {
       Builder.defineMacro(getThreadSafeMacroName());
     }
   }

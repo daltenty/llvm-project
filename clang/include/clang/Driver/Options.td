@@ -5795,6 +5795,12 @@ defm pthread : BoolOption<"", "pthread",
   PosFlag<SetTrue, [], [ClangOption], "Support POSIX threads in generated code">,
   NegFlag<SetFalse>,
   BothFlags<[], [ClangOption, CC1Option, FlangOption, FC1Option]>>;
+defm threadsafe_macros : BoolFOption<"threadsafe-macros",
+  LangOpts<"ThreadSafeMacros">, DefaultFalse,
+  PosFlag<SetTrue, [], [ClangOption, CC1Option],
+          "Set threadsafe macros">,
+  NegFlag<SetFalse, [], [ClangOption, CC1Option], "Don't set threadsafe macros">,
+  BothFlags<[], [ClangOption, CC1Option]>>;
 def pie : Flag<["-"], "pie">, Group<Link_Group>;
 def static_pie : Flag<["-"], "static-pie">, Group<Link_Group>;
 def read__only__relocs : Separate<["-"], "read_only_relocs">;
