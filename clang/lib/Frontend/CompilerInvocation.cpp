@@ -4153,6 +4153,12 @@ bool CompilerInvocation::ParseLangArgs(LangOptions &Opts, ArgList &Args,
   if (T.isOSAIX() && (Args.hasArg(OPT_mignore_xcoff_visibility)))
     Opts.IgnoreXCOFFVisibility = 1;
 
+  // Change the default for ThreadSafeMacros for AIX.
+  if (T.isOSAIX()) {
+    Opts.ThreadSafeMacros =
+        Args.hasFlag(OPT_fthreadsafe_macros, OPT_fno_threadsafe_macros, true);
+  }
+
   if (Args.hasArg(OPT_ftrapv)) {
     Opts.setSignedOverflowBehavior(LangOptions::SOB_Trapping);
     // Set the handler, if one is specified.

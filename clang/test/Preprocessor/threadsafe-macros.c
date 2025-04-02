@@ -7,6 +7,8 @@
 
 // RUN: %clang_cc1 -E -dM -fthreadsafe-macros -triple powerpc64le-linux-gnu < /dev/null | FileCheck -match-full-lines -check-prefix THREADSAFE-GNU %s
 // RUN: %clang_cc1 -E -dM -fthreadsafe-macros -triple powerpc64-ibm-aix < /dev/null | FileCheck -match-full-lines -check-prefix THREADSAFE-AIX %s
+// RUN: %clang_cc1 -E -dM -triple powerpc-ibm-aix < /dev/null | FileCheck -match-full-lines -check-prefix THREADSAFE-AIX %s
+// RUN: %clang_cc1 -E -dM -triple powerpc64-ibm-aix < /dev/null | FileCheck -match-full-lines -check-prefix THREADSAFE-AIX %s
 //
 // THREADSAFE-GNU: #define _REENTRANT 1
 // THREADSAFE-AIX: #define _THREAD_SAFE 1
